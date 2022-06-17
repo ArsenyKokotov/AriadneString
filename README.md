@@ -6,3 +6,8 @@
 <li>Train neural network.</li>
 <li>Users should be able to adjust weights of nueral network manually.</li>
 </ul>
+
+<h3>So far ... </h3>
+
+https://user-images.githubusercontent.com/52434320/174397483-0c4186e3-13b9-4a7f-854e-e932da269b0e.mp4
+

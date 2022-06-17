@@ -7,30 +7,32 @@ class Bot{
 
         this.speedX = 0;
         this.speedY = 0;
-        this.speed = 10;
+        this.speed = 1;
         this.acceleration=0.2;
         this.maxSpeed=3;
-        //this.friction=0.05;
-
 
         this.controls=new Controls();
+
+        this.box=new CollisionBox(this);
+
     }
 
-    update(canvas_borders) {
-        this.#move(canvas_borders);
+    update(canvas_borders,ctx) {
+        var stop = this.box.update(ctx);
+        this.#move(canvas_borders, stop);
     }
 
-    #move(canvas_borders) {
-        if(this.controls.forward && this.y-this.radius>0){
+    #move(canvas_borders, stop) {
+        if(this.controls.forward && this.y-this.radius>0 && stop[0]==false){
             this.speedY=this.speed;
         }
-        if(this.controls.reverse && this.y+this.radius<canvas_borders[1]){
+        if(this.controls.reverse && this.y+this.radius<canvas_borders[1] && stop[3]==false){
             this.speedY=-this.speed;
         }
-        if(this.controls.right && this.x+this.radius<canvas_borders[0]){
+        if(this.controls.right && this.x+this.radius<canvas_borders[0] && stop[2]==false){
             this.speedX=-this.speed;
         }
-        if(this.controls.left && this.x-this.radius>0){
+        if(this.controls.left && this.x-this.radius>0 && stop[1]==false){
             this.speedX=this.speed;
         }
 
@@ -51,7 +53,18 @@ class Bot{
         ctx.arc(this.x, this.y, this.radius, 0, 2*Math.PI);
         ctx.fill();
         ctx.stroke();
-        ctx.restore();
 
+
+        this.box.draw(ctx);
+
+        ctx.restore();
     }
 }
+
+ //     const imageData = ctx.getImageData(this.x-this.radius, this.y-this.radius, 2*this.radius, 2*this.radius);
+        //     console.log("----------------------");
+        //     console.log(imageData.data[0]);
+        //     console.log(imageData.data[1]);
+        //     console.log(imageData.data[2]);
+        //     console.log(imageData.data[3]);
+        //     console.log("----------------------");

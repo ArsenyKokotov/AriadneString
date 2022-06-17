@@ -10,7 +10,6 @@ class Controls{
 
     #addKeyboardListeners(){
         document.onkeydown=(event)=>{
-            console.log(event.key);
             switch(event.key){
                 case "ArrowLeft":
                     this.left=true;

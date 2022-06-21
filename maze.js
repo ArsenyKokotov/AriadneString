@@ -33,7 +33,6 @@ class Maze_Drawer{
 
     draw(ctx, arr_matrix) {
         const terrain_matrix=arr_matrix;
-		ctx.clearRect(0, 0, this.CANVAS_HEIGHT, this.CANVAS_WIDTH);
 		ctx.beginPath();
 		terrain_matrix.forEach((pixelsRow, rowIndex) => {
 			const y = rowIndex * this.PIXEL_RATIO;

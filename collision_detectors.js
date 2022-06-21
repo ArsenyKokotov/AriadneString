@@ -1,78 +1,85 @@
 class CollisionBox{
-    constructor(bot) {
-        // this.x=bot.x-bot.radius;
-        // this.y=bot.y-bot.radius;
-        
-        // this.xx = this.width*Math.cos(angle);
-        // this.yy = this.width*Math.sin(angle);
-        this.lines=[];
+    constructor(bot, collision_detection_color) {
         this.detections=[];
+        this.color=collision_detection_color;
+        this.angles=[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1,
+                     1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9];
     }
 
-    update(ctx){
-        this.#newCoord();
+    getX(center_x, radius, angle) {
+        if (angle>0.5 && angle<1.5) {
+            return Math.floor(center_x+Math.cos(Math.PI*angle)*radius)-2;
+        } else if (angle!=0.5 && angle!=1.5) {
+            return Math.floor(center_x+Math.cos(Math.PI*angle)*radius)+2;
+        }
 
-        const imageDataUpperLine = ctx.getImageData(this.lines[0][0].x, this.lines[0][0].y, 1, 2*bot.radius);
-        const imageDataLeftLine = ctx.getImageData(this.lines[1][0].x, this.lines[1][0].y, 1, 2*bot.radius);
-        const imageDataRightLine = ctx.getImageData(this.lines[2][0].x, this.lines[2][0].y, 1, 2*bot.radius);
-        const imageDataBottomLine = ctx.getImageData(this.lines[3][0].x, this.lines[3][0].y, 1, 2*bot.radius);
+        return Math.floor(center_x+Math.cos(Math.PI*angle)*radius);
+    }
+
+    getY(center_y, radius, angle) {
+        if (angle>0 && angle<1) {
+            return Math.floor(center_y-Math.sin(Math.PI*angle)*radius)-2;
+        }
+        else if (angle!=0 && angle!=1) {
+            return Math.floor(center_y-Math.sin(Math.PI*angle)*radius)+2;
+        }
+
+        return Math.floor(center_y-Math.sin(Math.PI*angle)*radius);
+    }
+
+    update(ctx, bot){
+
         
         var stop=[false,false,false,false];
-        
-        if (imageDataUpperLine.data[0]==0 && imageDataUpperLine.data[1]==0) {
-            stop[0]=true;
-            console.log("a");
-        }
-        if (imageDataLeftLine.data[0]==0 && imageDataLeftLine.data[1]==0) {
-            stop[1]=true;
-            console.log("b");
-        }
-        if (imageDataRightLine.data[0]==0 && imageDataRightLine.data[1]==0) {
-            stop[2]=true;
-            console.log("c");
-        }
-        if (imageDataBottomLine.data[0]==0 && imageDataBottomLine.data[1]==0) {
-            stop[3]=true;
-            console.log("d");
+
+        var coord_x=this.angles.map((element, index) => {
+            return this.getX(bot.x, bot.radius, element);
+        });
+
+        var coord_y=this.angles.map((element, index) => {
+            return this.getY(bot.y, bot.radius, element);
+        });
+
+        for (let i=0; i<this.angles.length; i++) {
+            var imageData = ctx.getImageData(
+                coord_x[i],
+                coord_y[i],
+                1,
+                1
+            );
+
+            if (imageData.data[0]==this.color[0]) {
+                if (this.angles[i]==0) {
+                    stop[2]=true;
+                } 
+                if (this.angles[i]==0.5) {
+                    stop[0]=true;
+                }
+                if (this.angles[i]==1) {
+                    stop[1]=true;
+                }
+                if (this.angles[i]==1.5) {
+                    stop[3]=true;
+                }
+                if (this.angles[i]>0 && this.angles[i]<0.5) {
+                    stop[2]=true;
+                    stop[0]=true;
+                }
+                else if (this.angles[i]>0.5 && this.angles[i]<1) {
+                    stop[1]=true;
+                    stop[0]=true;
+                }
+                else if (this.angles[i]>1 && this.angles[i]<1.5) {
+                    stop[1]=true;
+                    stop[3]=true;
+                }
+                else if (this.angles[i]>1.5) {
+                    stop[2]=true;
+                    stop[3]=true;
+                }
+            }
         }
 
         return stop;
-    }
-
-    #newCoord() {
-        this.lines=[];
-
-        //Upper horizontal line
-        const start_1 = {x: bot.x-bot.radius, y:bot.y-bot.radius};
-        const end_1 =  {x: bot.x+bot.radius, y:bot.y-bot.radius};
-        const line_1 = [start_1, end_1];
-
-        //left vertical line
-        const start_2 = {x: bot.x-bot.radius, y:bot.y-bot.radius};
-        const end_2 =  {x: bot.x-bot.radius, y:bot.y+bot.radius};
-        const line_2 = [start_2, end_2];
-
-        //right vertical line
-        const start_3 = {x: bot.x+bot.radius, y:bot.y-bot.radius};
-        const end_3 =  {x: bot.x+bot.radius, y:bot.y+bot.radius};
-        const line_3 = [start_3, end_3];
-
-        //bottom horizontal line
-        const start_4 = {x: bot.x-bot.radius, y:bot.y+bot.radius};
-        const end_4 =  {x: bot.x+bot.radius, y:bot.y+bot.radius};
-        const line_4 = [start_4, end_4];
-
-        this.lines.push(line_1, line_2, line_3, line_4);
-
-    }
-
-    draw(ctx) {
-        ctx.save();
-        for (let i=0; i<this.lines.length; i++) {
-            ctx.beginPath();
-            ctx.moveTo(this.lines[i][0].x, this.lines[i][0].y);
-            ctx.lineTo(this.lines[i][1].x, this.lines[i][1].y);
-            ctx.stroke();
-        }
     }
 }

@@ -13,12 +13,13 @@ class Bot{
 
         this.controls=new Controls();
 
-        this.box=new CollisionBox(this);
-
+        this.box=new CollisionBox(this, [255,0,0]);
+        //this.aString=new ariadneString(this);
     }
 
     update(canvas_borders,ctx) {
-        var stop = this.box.update(ctx);
+        var stop = this.box.update(ctx, this);
+        //this.aString.update(ctx, this);
         this.#move(canvas_borders, stop);
     }
 
@@ -53,18 +54,10 @@ class Bot{
         ctx.arc(this.x, this.y, this.radius, 0, 2*Math.PI);
         ctx.fill();
         ctx.stroke();
+        ctx.closePath();
 
 
-        this.box.draw(ctx);
-
+        //this.box.draw(ctx);
         ctx.restore();
     }
 }
-
- //     const imageData = ctx.getImageData(this.x-this.radius, this.y-this.radius, 2*this.radius, 2*this.radius);
-        //     console.log("----------------------");
-        //     console.log(imageData.data[0]);
-        //     console.log(imageData.data[1]);
-        //     console.log(imageData.data[2]);
-        //     console.log(imageData.data[3]);
-        //     console.log("----------------------");

@@ -4,7 +4,7 @@
 <li>Add Django to include Python functionalities.</li>
 <li>Add independence to the bot using a neural network.</li>
 <li>Train neural network.</li>
-<li>Users should be able to adjust weights of nueral network manually.</li>
+<li>Users should be able to adjust weights of neural network manually.</li>
 </ul>
 
 <h3>So far ... </h3>

@@ -24,17 +24,29 @@ class Bot{
     }
 
     #move(canvas_borders, stop) {
-        if(this.controls.forward && this.y-this.radius>0 && stop[0]==false){
+        if(this.controls.forward && this.y-this.radius>0){
             this.speedY=this.speed;
+            if (stop[0]==true) {
+                this.speedY=-this.speed;
+            }
         }
-        if(this.controls.reverse && this.y+this.radius<canvas_borders[1] && stop[3]==false){
+        if(this.controls.reverse && this.y+this.radius<canvas_borders[1]){
             this.speedY=-this.speed;
+            if (stop[3]==true) {
+                this.speedY=this.speed;
+            }
         }
-        if(this.controls.right && this.x+this.radius<canvas_borders[0] && stop[2]==false){
+        if(this.controls.right && this.x+this.radius<canvas_borders[0]){
             this.speedX=-this.speed;
+            if (stop[2]==true) {
+                this.speedX=this.speed;
+            }
         }
-        if(this.controls.left && this.x-this.radius>0 && stop[1]==false){
+        if(this.controls.left && this.x-this.radius>0){
             this.speedX=this.speed;
+            if (stop[1]==true) {
+                this.speedX=-this.speed;
+            }
         }
 
         this.x-=this.speedX;

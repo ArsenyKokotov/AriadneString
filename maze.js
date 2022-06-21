@@ -10,7 +10,7 @@ class Maze_Drawer{
                 [this.BLACK]: 'black',
                 [this.WHITE]: 'white'
         };
-        this.PIXEL_RATIO = 10;
+        this.PIXEL_RATIO = 20;
 
         this.treasure_x=0;
         this.treasure_y=0;

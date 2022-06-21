@@ -4,7 +4,7 @@ const HEIGHT=800;
 
 const BOT_X=400;
 const BOT_Y=400;
-const BOT_R=3;
+const BOT_R=4;
 
 var botCanvas=document.getElementById("myCanvas");
 

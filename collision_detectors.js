@@ -2,15 +2,16 @@ class CollisionBox{
     constructor(bot, collision_detection_color) {
         this.detections=[];
         this.color=collision_detection_color;
-        this.angles=[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1,
-                     1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9];
+        // this.angles=[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1,
+        //              1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9];
+        this.angles=[0, 0.5, 1, 1.5];
     }
 
     getX(center_x, radius, angle) {
         if (angle>0.5 && angle<1.5) {
-            return Math.floor(center_x+Math.cos(Math.PI*angle)*radius)-1;
+            return Math.floor(center_x+Math.cos(Math.PI*angle)*radius)-2;
         } else if (angle!=0.5 && angle!=1.5) {
-            return Math.floor(center_x+Math.cos(Math.PI*angle)*radius)+1;
+            return Math.floor(center_x+Math.cos(Math.PI*angle)*radius)+2;
         }
 
         return Math.floor(center_x+Math.cos(Math.PI*angle)*radius);
@@ -18,10 +19,10 @@ class CollisionBox{
 
     getY(center_y, radius, angle) {
         if (angle>0 && angle<1) {
-            return Math.floor(center_y-Math.sin(Math.PI*angle)*radius)-1;
+            return Math.floor(center_y-Math.sin(Math.PI*angle)*radius)-2;
         }
         else if (angle!=0 && angle!=1) {
-            return Math.floor(center_y-Math.sin(Math.PI*angle)*radius)+1;
+            return Math.floor(center_y-Math.sin(Math.PI*angle)*radius)+2;
         }
 
         return Math.floor(center_y-Math.sin(Math.PI*angle)*radius);

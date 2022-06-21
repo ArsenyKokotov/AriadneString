@@ -1,5 +1,5 @@
 class Bot{
-    constructor(x,y,radius,color="red"){
+    constructor(x,y,radius,color='red'){
         this.x=x;
         this.y=y;
         this.radius=radius;
@@ -8,18 +8,18 @@ class Bot{
         this.speedX = 0;
         this.speedY = 0;
         this.speed = 1;
-        this.acceleration=0.2;
-        this.maxSpeed=3;
+
+        this.COLLISION_COLOR=[0,0,0];
 
         this.controls=new Controls();
 
-        this.box=new CollisionBox(this, [255,0,0]);
-        //this.aString=new ariadneString(this);
+        this.box=new CollisionBox(this, this.COLLISION_COLOR);
+        this.aString=new ariadneString(this);
     }
 
     update(canvas_borders,ctx) {
         var stop = this.box.update(ctx, this);
-        //this.aString.update(ctx, this);
+        this.aString.update(ctx, this);
         this.#move(canvas_borders, stop);
     }
 
@@ -50,14 +50,11 @@ class Bot{
         ctx.save();
         ctx.beginPath();
         ctx.strokeStyle = this.color;
-        ctx.fillStyle=this.color;
         ctx.arc(this.x, this.y, this.radius, 0, 2*Math.PI);
+        ctx.fillStyle=this.color;
         ctx.fill();
         ctx.stroke();
         ctx.closePath();
-
-
-        //this.box.draw(ctx);
         ctx.restore();
     }
 }

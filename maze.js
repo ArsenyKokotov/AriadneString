@@ -1,5 +1,5 @@
 class Maze_Drawer{
-    constructor(width,height) {
+    constructor(width,height, treasure_color='#FEC576') {
         this.CANVAS_HEIGHT = width;
         this.CANVAS_WIDTH = height;
 
@@ -11,6 +11,11 @@ class Maze_Drawer{
                 [this.WHITE]: 'white'
         };
         this.PIXEL_RATIO = 10;
+
+        this.treasure_x=0;
+        this.treasure_y=0;
+        this.draw_treasure=false;
+        this.TREASURE_COLOR=treasure_color;
     }
     
     binary_maze() {
@@ -43,6 +48,22 @@ class Maze_Drawer{
 			});
 		});
 		ctx.closePath();
-	}
+
+        if (this.draw_treasure==false) {
+            while (ctx.getImageData(this.treasure_x, this.treasure_y, 10, 10).data[0]==0) {
+                this.treasure_x= Math.floor(Math.random() * WIDTH);
+                this.treasure_y= Math.floor(Math.random() * HEIGHT);
+            }
+            this.draw_treasure=true;
+        }
+
+        if (this.draw_treasure){
+            ctx.beginPath();
+            ctx.fillStyle=this.TREASURE_COLOR;
+            ctx.fillRect(this.treasure_x, this.treasure_y, 10, 10);
+            //ctx.stroke();
+            ctx.closePath();
+        }
+    }
 
 }

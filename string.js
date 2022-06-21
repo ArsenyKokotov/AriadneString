@@ -5,16 +5,13 @@ class ariadneString{
     }
 
     draw(ctx, x, y) {
-        //ctx.save();
         ctx.beginPath();
         ctx.fillStyle="red";
         ctx.fillRect(x,y,5,5);
-        ctx.stroke();
-        //ctx.restore();
+        ctx.closePath();
     }
 
     update(ctx, bot) {
-        this.draw(ctx, bot.x, bot.y);
-        //console.log("draw");
+        this.draw(ctx, bot.x+bot.radius+2, bot.y);
     }
 }

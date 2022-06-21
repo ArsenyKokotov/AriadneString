@@ -8,9 +8,9 @@ class CollisionBox{
 
     getX(center_x, radius, angle) {
         if (angle>0.5 && angle<1.5) {
-            return Math.floor(center_x+Math.cos(Math.PI*angle)*radius)-2;
+            return Math.floor(center_x+Math.cos(Math.PI*angle)*radius)-1;
         } else if (angle!=0.5 && angle!=1.5) {
-            return Math.floor(center_x+Math.cos(Math.PI*angle)*radius)+2;
+            return Math.floor(center_x+Math.cos(Math.PI*angle)*radius)+1;
         }
 
         return Math.floor(center_x+Math.cos(Math.PI*angle)*radius);
@@ -18,10 +18,10 @@ class CollisionBox{
 
     getY(center_y, radius, angle) {
         if (angle>0 && angle<1) {
-            return Math.floor(center_y-Math.sin(Math.PI*angle)*radius)-2;
+            return Math.floor(center_y-Math.sin(Math.PI*angle)*radius)-1;
         }
         else if (angle!=0 && angle!=1) {
-            return Math.floor(center_y-Math.sin(Math.PI*angle)*radius)+2;
+            return Math.floor(center_y-Math.sin(Math.PI*angle)*radius)+1;
         }
 
         return Math.floor(center_y-Math.sin(Math.PI*angle)*radius);
@@ -48,7 +48,15 @@ class CollisionBox{
                 1
             );
 
-            if (imageData.data[0]==this.color[0]) {
+            // console.log("------------------");
+            // console.log(imageData.data[0]);
+            // console.log(imageData.data[1]);
+            // console.log(imageData.data[2]);
+            // console.log("------------------");
+
+            if (imageData.data[0]==this.color[0] &&
+                imageData.data[1]==this.color[1] &&
+                imageData.data[2]==this.color[2]) {
                 if (this.angles[i]==0) {
                     stop[2]=true;
                 } 
@@ -79,6 +87,7 @@ class CollisionBox{
                 }
             }
         }
+
 
         return stop;
     }
